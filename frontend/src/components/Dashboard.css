@@ -1,0 +1,149 @@
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: 'Inter', 'Helvetica', sans-serif;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  border-right: 1px solid #000000;
+  padding: 2rem 0;
+}
+
+.sidebar-header {
+  padding: 0 2rem 2rem 2rem;
+  border-bottom: 1px solid #000000;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  color: #000000;
+}
+
+.sidebar-nav {
+  padding: 2rem 0;
+}
+
+.nav-item {
+  display: block;
+  padding: 1rem 2rem;
+  color: #000000;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background-color: #f0f0f0;
+}
+
+.main-content {
+  flex: 1;
+  background-color: #f0f0f0;
+  padding: 2rem;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  padding: 2rem;
+}
+
+.card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+.burnout-score {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #000000;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.burnout-card p {
+  text-align: center;
+  margin: 0;
+  font-size: 1.1rem;
+  color: #000000;
+}
+
+.activity-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #333333;
+}
+
+.recommendations {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recommendations li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  color: #000000;
+}
+
+.recommendations li:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #000000;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

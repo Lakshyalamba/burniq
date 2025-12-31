@@ -1,0 +1,11 @@
+{
+  "name": "burniq",
+  "private": true,
+  "version": "1.0.0",
+  "description": "AI-powered productivity analytics and burnout detection platform",
+  "scripts": {
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && npm run dev",
+    "ai": "cd ai-service && node index.js"
+  }
+}
