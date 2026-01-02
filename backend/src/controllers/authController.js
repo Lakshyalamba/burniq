@@ -1,19 +1,13 @@
 const prisma = require('../config/prisma');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-// --- USER SIGNUP ---
 const signup = async (req, res) => {
     console.log("Signup Request Received:", req.body);
   try {
     const { name, email, password } = req.body;
-
-    // 1. Basic Validation
     if (!name || !email || !password) {
       return res.status(400).json({ message: "Please fill all fields" });
     }
-
-    // 2. Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
@@ -21,12 +15,8 @@ const signup = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: "User already exists with this email" });
     }
-
-    // 3. Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
-    // 4. Create User in MongoDB
     const newUser = await prisma.user.create({
       data: {
         name,
@@ -34,8 +24,6 @@ const signup = async (req, res) => {
         password: hashedPassword,
       },
     });
-
-    // 5. Generate JWT Token
     const token = jwt.sign(
       { userId: newUser.id },
       process.env.JWT_SECRET,
@@ -56,18 +44,12 @@ const signup = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
-// --- USER LOGIN ---
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // 1. Validation
     if (!email || !password) {
       return res.status(400).json({ message: "Please provide email and password" });
     }
-
-    // 2. Find User
     const user = await prisma.user.findUnique({
       where: { email },
     });
@@ -75,14 +57,10 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
-
-    // 3. Compare Password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
-
-    // 4. Generate JWT Token
     const token = jwt.sign(
       { userId: user.id },
       process.env.JWT_SECRET,
