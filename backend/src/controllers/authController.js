@@ -2,7 +2,7 @@ const prisma = require('../config/prisma');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const signup = async (req, res) => {
-    console.log("Signup Request Received:", req.body);
+  console.log("Signup Request Received:", req.body);
   try {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
@@ -15,9 +15,8 @@ const signup = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: "User already exists with this email" });
     }
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = await prisma.user.create({
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await prisma.user.create({
       data: {
         name,
         email,
@@ -25,7 +24,7 @@ const signup = async (req, res) => {
       },
     });
     const token = jwt.sign(
-      { userId: newUser.id },
+      { userId: user.id },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
@@ -34,17 +33,19 @@ const signup = async (req, res) => {
       message: "User registered successfully",
       token,
       user: {
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
+        id: user.id,
+        name: user.name,
+        email: user.email,
       },
     });
+
   } catch (error) {
     console.error("Signup Error:", error.message);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
 const login = async (req, res) => {
+  console.log("Login Request Received:", req.body.email);
   try {
     const { email, password } = req.body;
     if (!email || !password) {
